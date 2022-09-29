@@ -1,5 +1,17 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=Bungee+Spice&family=Outfit&display=swap');
+/* font-family: 'Bungee Spice', cursive;
+font-family: 'Outfit', sans-serif; */
+
+
 body {
   margin: 0;
+}
+
+* {
+  font-family: 'Outfit', sans-serif;
 }
 
 code {
