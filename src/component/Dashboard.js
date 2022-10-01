@@ -1,6 +1,9 @@
 import React, { useState } from 'react'
 import '../index.css'
 import AddSubject from './AddSubject';
+import Subject from './Subject';
+
+
 
 const Dashboard = () => {
   const [show, setShow] = useState(false);
@@ -55,8 +58,13 @@ const Dashboard = () => {
       </div>
 
       {/* Data */}
-      <div className='flex flex-row flex-wrap border-t-2 border-grey'>
-
+      <div className='flex flex-col items-center justify-center space-y-8 border-t-2 border-grey py-6 bg-blue-100'>
+        <div className='w-[100%]'>
+          <Subject />
+        </div>
+        <div className='w-[100%]'>
+          <Subject />
+        </div>
       </div>
     </div >
   )

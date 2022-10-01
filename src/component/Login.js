@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
+import '../index.css'
 
 const Login = () => {
 
@@ -7,12 +8,12 @@ const Login = () => {
     e.preventDefault();
   }
   return (
-    <div>
+    <div className='w-full'>
       <div className='flex flex-col md:flex-row items-center justify-evenly my-14'>
         <div className='flex-1'>
-          <form onSubmit={handleSubmit} className='bg-white container mx-auto w-full md:w-[45%] py-8 px-6 rounded-xl shadow-xl shadow-blue-100'>
-            <h1 className='text-3xl font-semibold text-center mt-3 mb-9'> Welcome Back! </h1>
-            <p className='text-xl text-zinc-500 font-thin mt-2 mb-6'> Please proceed. . . </p>
+          <form onSubmit={handleSubmit} className='bg-white md:container md:mx-auto w-[95vw] md:w-[45%] py-8 px-6 rounded-xl shadow-xl shadow-blue-100'>
+            <h1 className='text-3xl font-semibold text-center mt-3 mb-9 border border-black bgBack'> Welcome Back! </h1>
+            {/* <p className='text-xl text-zinc-500 font-thin mt-2 mb-6'> Please proceed. . . </p> */}
             <div className='flex flex-col space-y-4'>
               <div className='flex flex-col space-y-2'>
                 <label htmlFor='email'>
