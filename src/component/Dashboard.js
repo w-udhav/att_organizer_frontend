@@ -2,7 +2,8 @@ import React, { useState } from 'react'
 import '../index.css'
 import AddSubject from './AddSubject';
 import Subject from './Subject';
-
+import { doc, getDoc } from 'firebase/firestore'
+import { db } from '../Firebase';
 
 
 const Dashboard = () => {
@@ -11,8 +12,20 @@ const Dashboard = () => {
     subject: '',
     classAtt: '',
     classOcc: '',
-    minAtt: ''
+    minAtt: '',
+    achieved: ''
   })
+
+  const handleTest = async () => {
+    const docRef = doc(db);
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+      console.log("Document Data ", docSnap.data())
+    } else {
+      console.log("No such Document")
+    }
+  }
 
 
   const handleShow = () => {
@@ -32,17 +45,16 @@ const Dashboard = () => {
     <div className=''>
 
       {/* head */}
-      <div className='flex flex-col justify-between items-center py-3 px-16 space-y-8'>
-        <div className='text-4xl' style={{ fontFamily: 'Bungee Spice' }}>
-          Hey, User
+      <div className='flex flex-row justify-between items-center py-3 px-8 shadow-md'>
+        <div className='text-2xl' style={{ fontFamily: 'Barlow' }}>
+          user
         </div>
         <div className=''>
           <button
             onClick={() => handleShow()}
-            className='flex flex-col space-y-1 items-center hover:scale-105 transition-all ease-in-out selection:bg-none outline-none border-none'
+            className='bg-blue-400 px-6 py-2 rounded-md text-white'
           >
-            <img className='w-[50px]' src={require('../assets/plus.png')} alt="add" />
-            <div className='text-green-500 font-semibold text-[18px] bg-green-100 rounded-xl py-1 px-3'> Add Subject </div>
+            New
           </button>
         </div>
 
@@ -58,12 +70,9 @@ const Dashboard = () => {
       </div>
 
       {/* Data */}
-      <div className='flex flex-col items-center justify-center space-y-8 border-t-2 border-grey py-6 bg-blue-100'>
+      <div className='flex flex-col items-center justify-center space-y-8 border-t-2 border-grey py-6'>
         <div className='w-[100%]'>
-          <Subject />
-        </div>
-        <div className='w-[100%]'>
-          <Subject />
+          <Subject handleTest={handleTest} />
         </div>
       </div>
     </div >

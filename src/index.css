@@ -8,7 +8,9 @@ font-family: 'Outfit', sans-serif; */
 @import url('https://fonts.googleapis.com/css2?family=Bungee+Hairline&family=Bungee+Inline&display=swap');
 /* font-family: 'Bungee Hairline', cursive;
 font-family: 'Bungee Inline',cursive; */
+@import url('https://fonts.googleapis.com/css2?family=Barlow:wght@200&display=swap');
 
+/* font-family: 'Barlow',sans-serif; */
 body {
   margin: 0;
 }
@@ -31,5 +33,7 @@ a {
 }
 
 .bgBack {
-  /* background-image: url('../'); */
+  background-image: url('./assets/landscapes/3.jpg');
+  background-size: cover;
+  background-position: 40% 35%;
 }

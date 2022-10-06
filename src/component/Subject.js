@@ -1,22 +1,48 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import '../index.css'
 
-function getRandomInt(min, max) {
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min + 1) + min)
-}
+const Subject = (props) => {
+  const [state, setState] = useState({
+    total: '',
+    attended: '',
+    required: '',
+    achieved: ''
+  })
+  const [status, setStatus] = useState(false);
 
+  function achievedStatus() {
+    let x = Math.floor((state.attended / state.total) * 100);
+    setState({
+      ...state,
+      achieved: x
+    })
+    if (x >= 75) {
+      console.log(x)
+      setStatus(true);
+    }
+    else if (x < 75) {
+      console.log(x)
+      setStatus(false);
+    }
+    return status;
 
-const Subject = () => {
-  const handleClick = () => {
-    let res = getRandomInt(1, 10);
+  }
+
+  useEffect(() => {
+    let res = achievedStatus();
     console.log(res)
+
+  }, [status])
+
+
+  const handleClick = () => {
+
   }
 
   return (
     <div className='mx-2 md:mx-[20%] flex flex-col shadow-md rounded-sm bg-white'>
-      <div className='bg-purple-700 rounded-[10px 10px 0 0] pt-16 pb-2'>
-        <h1 className='text-white text-2xl px-3'> Artificial Intelligence </h1>
+      <div className='bg-gradient-to-r from-cyan-500 to-blue-500 rounded-[10px 10px 0 0] pt-16 pb-2 bgBack'>
+        <h1 className='text-white text-2xl px-3 '> Artificial Intelligence </h1>
       </div>
 
       {/* Data div */}
@@ -25,36 +51,46 @@ const Subject = () => {
           <div className='flex flex-row'>
             <div className='flex-1'>
               <div>
-                total
+                Total
               </div>
               <div>
-                attended
+                Attended
               </div>
               <div>
-                required %
+                Required %
               </div>
               <div>
-                achieved %
+                Achieved %
               </div>
             </div>
+            {/* Data */}
             <div className='md:flex-1'>
               <div>
-                44
+                {state.total}
               </div>
               <div>
-                30
+                {state.attended}
               </div>
               <div>
-                75%
+                {state.required}%
               </div>
               <div>
-                68%
+                {state.achieved}%
               </div>
             </div>
           </div>
         </div>
         <div className='flex-1 text-center'>
-          status
+          {
+            status ?
+              (
+                <p className='text-green-600'> Hooray! you are ahead. </p>
+              )
+              :
+              (
+                <p className='text-red-600'> Ohh! You are running late. </p>
+              )
+          }
         </div>
       </div>
 
@@ -63,18 +99,18 @@ const Subject = () => {
         <div>
           <button
             onClick={() => handleClick()}
-            className='flex flex-row items-center space-x-2 bg-green-200 rounded-md px-6 py-1'
+            className='bg-green-200 rounded-md px-6 py-1'
           >
             <font> Total </font>
-            <img className='w-[25px]' src={require('../assets/plus.png')} alt="add" />
+
           </button>
         </div>
         <div>
           <button
-            className='flex flex-row items-center space-x-2 bg-green-200 rounded-md px-6 py-1'
+            onClick={() => props.handleTest()}
+            className='bg-green-200 rounded-md px-6 py-1'
           >
             <font> Attended </font>
-            <img className='w-[25px]' src={require('../assets/plus.png')} alt="add" />
           </button>
         </div>
       </div>

@@ -10,7 +10,7 @@ const Signup = () => {
     <div>
       <div className='flex flex-col md:flex-row items-center justify-evenly my-14'>
         <div className='flex-1'>
-          <form onSubmit={handleSubmit} className='bg-white container mx-auto w-full md:w-[45%] py-8 px-6 rounded-xl shadow-xl shadow-blue-100'>
+          <form onSubmit={handleSubmit} className='bg-white container mx-auto w-full md:w-[52%] py-8 px-6 rounded-md shadow-xl shadow-blue-100'>
             <h1 className='text-3xl font-semibold text-center mt-3 mb-9'> Create an account </h1>
             <div className='flex flex-col space-y-4'>
               <div className='flex flex-col space-y-2'>
@@ -20,7 +20,7 @@ const Signup = () => {
                 <input
                   type="text"
                   id='username'
-                  className='bg-zinc-100 border outline-none py-2 px-3 shadow-inner rounded-xl focus:border-blue-400 '
+                  className='bg-zinc-100 border outline-none py-2 px-3 shadow-inner rounded-md focus:border-blue-400 '
                 />
               </div>
               <div className='flex flex-col space-y-2'>
@@ -30,7 +30,7 @@ const Signup = () => {
                 <input
                   type="email"
                   id='email'
-                  className='bg-zinc-100 border outline-none py-2 px-3 shadow-inner rounded-xl focus:border-blue-400 '
+                  className='bg-zinc-100 border outline-none py-2 px-3 shadow-inner rounded-md focus:border-blue-400 '
                 />
               </div>
               <div className='flex flex-col space-y-2'>
@@ -40,7 +40,7 @@ const Signup = () => {
                 <input
                   type="password"
                   id='password'
-                  className='bg-zinc-100 outline-none py-2 px-3 rounded-xl shadow-inner border focus:border-blue-400'
+                  className='bg-zinc-100 outline-none py-2 px-3 rounded-md shadow-inner border focus:border-blue-400'
                 />
               </div>
               <div className='flex flex-col space-y-2'>
@@ -50,12 +50,12 @@ const Signup = () => {
                 <input
                   type="password"
                   id='conPass'
-                  className='bg-zinc-100 outline-none py-2 px-3 rounded-xl shadow-inner border focus:border-blue-400'
+                  className='bg-zinc-100 outline-none py-2 px-3 rounded-md shadow-inner border focus:border-blue-400'
                 />
               </div>
             </div>
             <button
-              className='w-full text-[20px] mt-8 bg-blue-500 text-white py-2 px-6 rounded-xl shadow-xl shadow-blue-100'
+              className='w-full text-[20px] mt-8 bg-blue-500 text-white py-2 px-6 rounded-md shadow-xl shadow-blue-100'
             >
               Submit
             </button>

@@ -11,8 +11,8 @@ const Login = () => {
     <div className='w-full'>
       <div className='flex flex-col md:flex-row items-center justify-evenly my-14'>
         <div className='flex-1'>
-          <form onSubmit={handleSubmit} className='bg-white md:container md:mx-auto w-[95vw] md:w-[45%] py-8 px-6 rounded-xl shadow-xl shadow-blue-100'>
-            <h1 className='text-3xl font-semibold text-center mt-3 mb-9 border border-black bgBack'> Welcome Back! </h1>
+          <form onSubmit={handleSubmit} className='bg-white md:container md:mx-auto w-[95vw] md:w-[52%] py-8 px-6 rounded-md shadow-md shadow-blue-100'>
+            <h1 className='text-3xl font-semibold text-center mt-3 mb-9'> Welcome Back! </h1>
             {/* <p className='text-xl text-zinc-500 font-thin mt-2 mb-6'> Please proceed. . . </p> */}
             <div className='flex flex-col space-y-4'>
               <div className='flex flex-col space-y-2'>
@@ -22,7 +22,7 @@ const Login = () => {
                 <input
                   type="email"
                   id='email'
-                  className='bg-zinc-100 border outline-none py-2 px-3 rounded-xl shadow-inner focus:border-blue-400 '
+                  className='bg-zinc-100 border outline-none py-2 px-3 rounded-md shadow-inner focus:border-blue-400 '
                 />
               </div>
               <div className='flex flex-col space-y-2'>
@@ -32,7 +32,7 @@ const Login = () => {
                 <input
                   type="password"
                   id='password'
-                  className='bg-zinc-100 outline-none py-2 px-3 rounded-xl shadow-inner border focus:border-blue-400'
+                  className='bg-zinc-100 outline-none py-2 px-3 rounded-md shadow-inner border focus:border-blue-400'
                 />
               </div>
 
@@ -44,7 +44,7 @@ const Login = () => {
             </button>
             <div className='mt-6'>
               don't have an account?&nbsp;
-              <span className='underline text-blue-500 hover:font-bold'>
+              <span className='underline underline-offset-4 text-blue-500 hover:font-semibold'>
                 <Link to='/signup'>Create Now!</Link>
               </span>
             </div>
