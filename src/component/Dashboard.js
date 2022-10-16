@@ -1,9 +1,11 @@
-import React, { useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import '../index.css'
 import AddSubject from './AddSubject';
 import Subject from './Subject';
-import { doc, getDoc } from 'firebase/firestore'
-import { db } from '../Firebase';
+import { doc, getDoc, onSnapshot, collection } from 'firebase/firestore'
+import { auth } from '../Firebase';
+import { CredentialContext } from './contexts/CredentialContext';
+import { onAuthStateChanged } from 'firebase/auth';
 
 
 const Dashboard = () => {
@@ -15,18 +17,30 @@ const Dashboard = () => {
     minAtt: '',
     achieved: ''
   })
+  // const currentUserStatus = useAuth();
+  const { currentUser, setCurrentUser } = useContext(CredentialContext)
 
-  const handleTest = async () => {
-    const docRef = doc(db);
-    const docSnap = await getDoc(docRef);
+  // const [currentUser, setCurrentUser] = useState();
 
-    if (docSnap.exists()) {
-      console.log("Document Data ", docSnap.data())
-    } else {
-      console.log("No such Document")
-    }
+  useEffect(() => {
+    const unsub = onAuthStateChanged(auth, user => {
+      if (user !== null) {
+        setCurrentUser([user.uid, user.email]);
+      } else {
+        setCurrentUser('')
+      }
+    });
+    return unsub;
+  }, []);
+
+  const handleTest = () => {
+    console.log(currentUser.uid)
   }
 
+  // Submitting Function
+  const handleSubmit = (e) => {
+    e.preventDefault();
+  }
 
   const handleShow = () => {
     setShow(true);
@@ -46,8 +60,8 @@ const Dashboard = () => {
 
       {/* head */}
       <div className='flex flex-row justify-between items-center py-3 px-8 shadow-md'>
-        <div className='text-2xl' style={{ fontFamily: 'Barlow' }}>
-          user
+        <div className='text-2xl ' style={{ fontFamily: 'Barlow' }}>
+          {currentUser === '' ? "Not logged in" : currentUser[1]}
         </div>
         <div className=''>
           <button
@@ -61,7 +75,7 @@ const Dashboard = () => {
         {/* Pop up */}
         {
           show ?
-            <AddSubject handleClose={handleClose} handleChange={handleChange} state={state} />
+            <AddSubject handleClose={handleClose} handleChange={handleChange} handleSubmit={handleSubmit} state={state} />
             : (
               null
             )
@@ -71,10 +85,31 @@ const Dashboard = () => {
 
       {/* Data */}
       <div className='flex flex-col items-center justify-center space-y-8 border-t-2 border-grey py-6'>
-        <div className='w-[100%]'>
+        {/* <div className='w-[100%]'>
           <Subject handleTest={handleTest} />
-        </div>
+        </div> */}
+        {
+          currentUser !== '' ?
+            (
+              <div className='w-[100%]'>
+                <Subject handleTest={handleTest} />
+              </div>
+            )
+            :
+            (
+              <div className='text-2xl' >
+                Sign in first!
+              </div>
+            )
+        }
       </div>
+
+      <button
+        onClick={() => handleTest()}
+        className='bg-blue-500 px-8 py-1 rounded-md'
+      >
+        test here
+      </button>
     </div >
   )
 }
