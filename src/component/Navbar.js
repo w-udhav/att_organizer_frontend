@@ -25,6 +25,7 @@ const Navbar = () => {
     setShow(!show)
   }
 
+
   useEffect(() => { }, [currentUser])
   return (
     <div className='sticky top-0 border border-grey w-full bg-white z-30'>
@@ -39,7 +40,7 @@ const Navbar = () => {
           </div>
 
           {
-            currentUser === '' ?
+            currentUser !== '' ?
               ""
               :
               <div className='underline underline-offset-4 '>
@@ -48,7 +49,7 @@ const Navbar = () => {
           }
 
           {
-            currentUser === '' ?
+            currentUser !== '' ?
               ""
               :
               <div className='underline underline-offset-4'>
@@ -59,7 +60,7 @@ const Navbar = () => {
             <Link to='/dashboard'> Dashboard </Link>
           </div>
           {
-            currentUser !== '' ?
+            currentUser === '' ?
               ""
               :
               <div className='bg-red-600 text-white px-4 py-2 rounded-[10px] outline-none border-none'>
