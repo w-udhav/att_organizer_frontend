@@ -21,6 +21,10 @@ const Navbar = () => {
     setLoading(false);
   }
 
+  function handleToggle() {
+    setShow(!show)
+  }
+
   useEffect(() => { }, [currentUser])
   return (
     <div className='sticky top-0 border border-grey w-full bg-white z-30'>
@@ -35,7 +39,7 @@ const Navbar = () => {
           </div>
 
           {
-            currentUser !== '' ?
+            currentUser === '' ?
               ""
               :
               <div className='underline underline-offset-4 '>
@@ -44,7 +48,7 @@ const Navbar = () => {
           }
 
           {
-            currentUser !== '' ?
+            currentUser === '' ?
               ""
               :
               <div className='underline underline-offset-4'>
@@ -55,65 +59,69 @@ const Navbar = () => {
             <Link to='/dashboard'> Dashboard </Link>
           </div>
           {
-            currentUser !== '' &&
-            <div className='bg-red-600 text-white px-4 py-2 rounded-[10px] outline-none border-none'>
-              <button
-                disabled={loading}
-                onClick={handleLogOut}
-              >
-                Logout
-              </button>
-            </div>
+            currentUser !== '' ?
+              ""
+              :
+              <div className='bg-red-600 text-white px-4 py-2 rounded-[10px] outline-none border-none'>
+                <button
+                  disabled={loading}
+                  onClick={handleLogOut}
+                >
+                  Logout
+                </button>
+              </div>
           }
         </div>
-        <div className='md:hidden block'>
+        <div className='md:hidden block'
+          onClick={() => setShow(true)}
+        >
           <button
-            onClick={() => setShow(!show)}
             className=''
           >
             <img className='w-[40px]' src={require('../assets/menu.png')} alt='hamburger icon' />
           </button>
-          <div className={`absolute top-0 -left-1 h-screen py-10 px-6 transition-transform duration-500 ease-in-out bg-blue-100 shadow-xl ${show ? "translate-x-0" : "translate-x-[-200px]"}`}>
-            {
-              show &&
+        </div>
+        <div onClick={() => setShow(false)} className={`md:hidden fixed top-0 left-0 w-[100%] h-screen  transition-opacity duration-700 bg-black shadow-xl ${show ? "bg-opacity-80" : "bg-opacity-20 left-[-100%]"}`}>
+          <div className={`absolute w-[45%] h-screen bg-white transition-all ease-in-out duration-300   ${show ? "translate-x-0" : "translate-x-[-200px]"}`}>
+            <div className='md:hidden flex flex-col text-[19px] space-y-2'>
               <div className=''>
-                <div className='md:hidden flex flex-col text-[19px] space-y-2'>
-                  <div className=''>
-                    <Link to='/'> # Home </Link>
-                  </div>
-                  {
-                    currentUser === '' &&
-                    <div className=''>
-                      <Link to='/login'> # Login </Link>
-                    </div>
-                  }
-                  {
-                    currentUser === '' &&
-                    <div className=''>
-                      <Link to='/signup'> # Sign up </Link>
-                    </div>
-                  }
-                  <div className=''>
-                    <Link to='/dashboard'> # Dashboard </Link>
-                  </div>
-                  {
-                    currentUser !== '' &&
-                    <div className='py-8'>
-                      <button
-                        disabled={loading}
-                        className='bg-red-600 text-white text-center px-4 py-2 rounded-[10px] outline-none border-none'
-                        onClick={handleLogOut}
-                      >
-                        Logout
-                      </button>
-                    </div>
-                  }
-                </div>
+                <Link to='/'> # Home </Link>
               </div>
-            }
-
+              {
+                currentUser === '' ?
+                  ""
+                  :
+                  <div className=''>
+                    <Link to='/login'> # Login </Link>
+                  </div>
+              }
+              {
+                currentUser === '' ?
+                  ""
+                  :
+                  <div className=''>
+                    <Link to='/signup'> # Sign up </Link>
+                  </div>
+              }
+              <div className=''>
+                <Link to='/dashboard'> # Dashboard </Link>
+              </div>
+              {
+                currentUser !== '' &&
+                <div className='py-8'>
+                  <button
+                    disabled={loading}
+                    className='bg-red-600 text-white text-center px-4 py-2 rounded-[10px] outline-none border-none'
+                    onClick={handleLogOut}
+                  >
+                    Logout
+                  </button>
+                </div>
+              }
+            </div>
           </div>
         </div>
+
       </div>
     </div>
   )
