@@ -3,9 +3,9 @@ import '../index.css'
 
 const Subject = (props) => {
   const [state, setState] = useState({
-    total: '',
-    attended: '',
-    required: '',
+    total: '44',
+    attended: '35',
+    required: '75',
     achieved: ''
   })
   const [status, setStatus] = useState(false);

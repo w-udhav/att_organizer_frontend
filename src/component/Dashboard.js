@@ -89,7 +89,7 @@ const Dashboard = () => {
           <Subject handleTest={handleTest} />
         </div> */}
         {
-          currentUser !== '' ?
+          !currentUser[0] !== undefined ?
             (
               <div className='w-[100%]'>
                 <Subject handleTest={handleTest} />
