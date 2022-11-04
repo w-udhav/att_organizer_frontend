@@ -37,7 +37,6 @@ const Signup = () => {
         ...perState,
         ...newVal
       }))
-      naviagate('/dashboard');
     })
   }
 
@@ -91,6 +90,7 @@ const Signup = () => {
             setErrors('Error!')
           }
         })
+      // naviagate('/dashboard');
     }
     setLoading(false);
   }

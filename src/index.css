@@ -38,22 +38,18 @@ a {
   background-position: 40% 35%;
 }
 
-.customInput {
-  font-family: 'Bungee Spice';
-}
-
-.customInput::placeholder {
-  font-family: 'Outfit', sans-serif;
-}
-
 .alignY {
   top: 50%;
   transform: translate(0, -50%);
 }
 
 .alignX {
-  margin-left: 50%;
+  left: 50%;
   transform: translate(-50%);
 }
 
-.navBarAnimation {}
+.align {
+  margin-top: 50%;
+  margin-left: 50%;
+  transform: translate(-50%);
+}

@@ -14,8 +14,10 @@ const Navbar = () => {
     try {
       let confirm = window.confirm('Wanna log out?');
       if (confirm) {
-        await logout();
-        navigate('/')
+        await logout()
+          .then(() => {
+            navigate('/')
+          })
         console.log('Logged out')
       }
     } catch {

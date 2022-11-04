@@ -2,47 +2,32 @@ import React, { useEffect, useState } from 'react'
 import '../index.css'
 
 const Subject = (props) => {
+  const data = props.data_model
   const [state, setState] = useState({
-    total: '44',
-    attended: '35',
-    required: '75',
-    achieved: ''
+    name: data.Name,
+    occurred: data.occurred,
+    attended: data.attended,
+    min: data.min,
+    achieved: data.achieved
   })
   const [status, setStatus] = useState(false);
 
-  function achievedStatus() {
-    let x = Math.floor((state.attended / state.total) * 100);
-    setState({
-      ...state,
-      achieved: x
-    })
-    if (x >= 75) {
-      console.log(x)
-      setStatus(true);
-    }
-    else if (x < 75) {
-      console.log(x)
-      setStatus(false);
-    }
-    return status;
-
+  const handleClick = () => {
+    console.log(state)
   }
 
   useEffect(() => {
-    let res = achievedStatus();
-    console.log(res)
-
-  }, [status])
-
-
-  const handleClick = () => {
-
-  }
+    if (data.achieved >= 75) {
+      setStatus(true)
+    } else {
+      setStatus(false)
+    }
+  })
 
   return (
     <div className='mx-2 md:mx-[20%] flex flex-col shadow-md rounded-sm bg-white'>
       <div className='bg-gradient-to-r from-cyan-500 to-blue-500 rounded-[10px 10px 0 0] pt-16 pb-2 bgBack'>
-        <h1 className='text-white text-2xl px-3 '> Artificial Intelligence </h1>
+        <h1 className='text-white text-2xl px-3 '> {state.name} </h1>
       </div>
 
       {/* Data div */}
@@ -66,16 +51,16 @@ const Subject = (props) => {
             {/* Data */}
             <div className='md:flex-1'>
               <div>
-                {state.total}
+                {state.occurred}
               </div>
               <div>
                 {state.attended}
               </div>
               <div>
-                {state.required}%
+                {state.min}
               </div>
               <div>
-                {state.achieved}%
+                {state.achieved}
               </div>
             </div>
           </div>
