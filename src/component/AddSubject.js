@@ -6,15 +6,26 @@ import '../index.css'
 
 const AddSubject = ({ handleClose }) => {
   const { currentUser } = useContext(CredentialContext)
-
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState({
     name: "",
     occurred: "",
     attended: "",
     min: "",
-    achieved: ""
+    achieved: "",
   })
+
+  const dateSet = () => {
+    const today = new Date();
+    const yyyy = today.getFullYear();
+    let mm = today.getMonth() + 1;
+    let dd = today.getDate();
+    if (dd < 10) dd = '0' + dd;
+    if (mm < 10) mm = '0' + mm;
+    let formattedToday = dd + '/' + mm + '/' + yyyy;
+    setData({ ...data, date: formattedToday })
+    console.log(data)
+  }
 
   const handleChange = (e) => {
     const value = e.target.value
@@ -22,7 +33,6 @@ const AddSubject = ({ handleClose }) => {
       ...data,
       [e.target.name]: value
     });
-
   }
 
   useEffect(() => {
@@ -51,7 +61,8 @@ const AddSubject = ({ handleClose }) => {
             occurred: "",
             attended: "",
             min: "",
-            achieved: ""
+            achieved: "",
+            date: ""
           }
           setData(perState => ({
             ...perState,

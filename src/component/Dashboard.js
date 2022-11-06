@@ -25,11 +25,13 @@ const Dashboard = () => {
     return unsub;
   }, []);
 
-  const handleTest = async () => {
+  useEffect(() => {
+    handleData();
+  }, [])
+
+  const handleData = async () => {
     const dataSet = await getCollections(currentUser[0])
     setData(dataSet)
-    console.log(data)
-    // console.log(dataSet)
   }
 
 
@@ -85,7 +87,7 @@ const Dashboard = () => {
                 console.log(e)
                 return (
                   <div className='w-[100%]'>
-                    <Subject handleTest={handleTest} data_model={e} />
+                    <Subject data_model={e} />
                   </div>
                 )
               })
@@ -101,7 +103,7 @@ const Dashboard = () => {
       </div>
 
       <button
-        onClick={() => handleTest()}
+        onClick={() => handleData()}
         className='bg-blue-500 px-8 py-1 rounded-md'
       >
         test here

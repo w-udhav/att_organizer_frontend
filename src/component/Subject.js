@@ -1,39 +1,113 @@
 import React, { useEffect, useState } from 'react'
+import { useContext } from 'react'
+import { AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai'
+import { addDocument } from '../Firebase'
 import '../index.css'
+import { CredentialContext } from './contexts/CredentialContext'
+import EditableBox from './EditableBox'
 
 const Subject = (props) => {
+  const { currentUser } = useContext(CredentialContext)
   const data = props.data_model
   const [state, setState] = useState({
     name: data.Name,
     occurred: data.occurred,
     attended: data.attended,
     min: data.min,
-    achieved: data.achieved
+    achieved: data.achieved,
+    date: data.date
   })
   const [status, setStatus] = useState(false);
-
-  const handleClick = () => {
-    console.log(state)
-  }
+  const [edit, setEdit] = useState(false)
+  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
-    if (data.achieved >= 75) {
+    if (state.achieved >= 75) {
       setStatus(true)
     } else {
       setStatus(false)
     }
   })
 
+
+
+  function achievedStatus() {
+    let x = parseFloat((state.attended / state.occurred) * 100).toFixed(1);
+    setState({
+      ...state,
+      achieved: x
+    })
+  }
+
+  const handleUpdate = (e) => {
+    const value = e.target.value
+    setState({
+      ...state,
+      [e.target.name]: value
+    })
+  }
+
+  const date = async () => {
+    const today = new Date();
+    const yyyy = today.getFullYear();
+    let mm = today.getMonth() + 1; // Months start at 0!
+    let dd = today.getDate();
+    if (dd < 10) dd = '0' + dd;
+    if (mm < 10) mm = '0' + mm;
+    const formattedToday = dd + '/' + mm + '/' + yyyy;
+    setState({ ...state, date: formattedToday })
+    achievedStatus();
+  }
+
+
+  const handleEdit = () => {
+    setEdit(true)
+    console.log(data)
+  }
+  const handleConfirm = async () => {
+    const confirm = window.confirm(
+      "Are you sure to continue?"
+    )
+    if (confirm === true) {
+      await date()
+        .then(async () => {
+          setEdit(false);
+          setLoading(true)
+          await addDocument(state, currentUser[0])
+            .then(() => {
+              setLoading(false);
+            })
+        })
+    }
+  }
+
+  const handleCancel = () => {
+    const confirmCancel = window.confirm(
+      "Do you want to cancel? All changes will be reversed!"
+    )
+    if (confirmCancel === true) {
+      setState({
+        name: data.Name,
+        occurred: data.occurred,
+        attended: data.attended,
+        min: data.min,
+        achieved: data.achieved
+      })
+    }
+    setEdit(false);
+  }
+
   return (
     <div className='mx-2 md:mx-[20%] flex flex-col shadow-md rounded-sm bg-white'>
-      <div className='bg-gradient-to-r from-cyan-500 to-blue-500 rounded-[10px 10px 0 0] pt-16 pb-2 bgBack'>
-        <h1 className='text-white text-2xl px-3 '> {state.name} </h1>
+      <div className='flex flex-row px-3 justify-between items-center bg-gradient-to-r from-cyan-500 to-blue-500 rounded-[10px 10px 0 0] pt-16 pb-2 bgBack'>
+        <h1 className='text-white text-2xl'> {state.name} </h1>
+        <h3 className='text-white text-sm'> {state.date} </h3>
       </div>
 
       {/* Data div */}
       <div className='flex flex-row items-center justify-evenly md:px-8 px-5'>
         <div className='flex-1 py-3 '>
-          <div className='flex flex-row'>
+          <div className='flex flex-row items-center'>
             <div className='flex-1'>
               <div>
                 Total
@@ -49,17 +123,32 @@ const Subject = (props) => {
               </div>
             </div>
             {/* Data */}
-            <div className='md:flex-1'>
-              <div>
-                {state.occurred}
-              </div>
-              <div>
-                {state.attended}
-              </div>
-              <div>
-                {state.min}
-              </div>
-              <div>
+            <div className="md:flex-1 flex flex-col justify-start items-center">
+              {
+                edit ?
+                  <EditableBox value={state.occurred} name='occurred' handleUpdate={handleUpdate} />
+                  :
+                  <div>
+                    {state.occurred}
+                  </div>
+              }
+              {
+                edit ?
+                  <EditableBox value={state.attended} name='attended' handleUpdate={handleUpdate} />
+                  :
+                  <div>
+                    {state.attended}
+                  </div>
+              }
+              {
+                edit ?
+                  <EditableBox value={state.min} name='min' handleUpdate={handleUpdate} />
+                  :
+                  <div>
+                    {state.min}
+                  </div>
+              }
+              <div className={`font-bold ${status ? "text-green-600" : "text-red-600"}`}>
                 {state.achieved}
               </div>
             </div>
@@ -68,36 +157,62 @@ const Subject = (props) => {
         <div className='flex-1 text-center'>
           {
             status ?
-              (
-                <p className='text-green-600'> Hooray! you are ahead. </p>
-              )
+              (<p className='text-green-600'> Hooray! you are ahead. </p>)
               :
-              (
-                <p className='text-red-600'> Ohh! You are running late. </p>
-              )
+              (<p className='text-red-600'> Ohh! You are running late. </p>)
           }
         </div>
       </div>
 
       {/* Buttons */}
-      <div className='flex flex-row items-center md:justify-end justify-center space-x-3 md:px-2 py-1 border-t-zinc-300 border'>
-        <div>
-          <button
-            onClick={() => handleClick()}
-            className='bg-green-200 rounded-md px-6 py-1'
-          >
-            <font> Total </font>
+      <div className='flex flex-row items-center justify-between space-x-4 px-3 md:px-6 pt-2 pb-1 border-t-zinc-300 border'>
+        {/* Edit */}
+        {
+          !edit ?
+            <div className=''>
+              <button
+                onClick={() => handleEdit()}
+              >
+                <img className='w-6 ' src={require('../assets/edit.png')} alt='edit icon' />
+              </button>
+            </div>
+            :
+            <div className=''>
+              <button
+                onClick={() => handleCancel()}
+              >
+                <img className='w-6 ' src={require('../assets/remove.png')} alt='remove icon' />
+              </button>
+            </div>
+        }
 
-          </button>
-        </div>
-        <div>
-          <button
-            onClick={() => props.handleTest()}
-            className='bg-green-200 rounded-md px-6 py-1'
-          >
-            <font> Attended </font>
-          </button>
-        </div>
+        {
+          !edit ?
+            // Delete
+            < div className=''>
+              <button
+                onClick={() => handleEdit()}
+              >
+                <img className='w-8 ' src={require('../assets/trash.png')} alt='trash icon' />
+              </button>
+            </div>
+            :
+            // Confirm
+            <div className='mb-1'>
+              <button
+                disabled={loading}
+                onClick={() => handleConfirm()}
+              >
+                {
+                  loading ?
+                    <p className='py-2 px-3 bg-blue-500 rounded-lg text-white text-sm'> Loading... </p>
+                    :
+                    <p className='py-2 px-3 bg-green-600 rounded-lg text-white text-sm'> Confirm </p>
+                }
+              </button>
+            </div>
+        }
+
       </div>
     </div>
   )

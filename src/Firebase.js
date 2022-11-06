@@ -37,7 +37,8 @@ export async function addDocument(data, currentUser) {
     occurred: parseFloat(data.occurred),
     attended: parseFloat(data.attended),
     min: parseFloat(data.min),
-    achieved: parseFloat(data.achieved)
+    achieved: parseFloat(data.achieved),
+    date: String(data.date)
   })
 }
 

@@ -32,6 +32,16 @@ a {
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
 .bgBack {
   background-image: url('./assets/landscapes/3.jpg');
   background-size: cover;
