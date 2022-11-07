@@ -2,8 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import '../index.css'
 import AddSubject from './AddSubject';
 import Subject from './Subject';
-import { doc, getDoc, onSnapshot, collection } from 'firebase/firestore'
-import { getDatabase, auth, addDocument, getCollections } from '../Firebase';
+import { auth, getCollections } from '../Firebase';
 import { CredentialContext } from './contexts/CredentialContext';
 import { onAuthStateChanged } from 'firebase/auth';
 
@@ -27,13 +26,18 @@ const Dashboard = () => {
 
   useEffect(() => {
     handleData();
-  }, [])
+  }, [currentUser, data])
 
   const handleData = async () => {
-    const dataSet = await getCollections(currentUser[0])
-    setData(dataSet)
+    if (currentUser[0] !== undefined) {
+      const dataSet = await getCollections(currentUser[0])
+      setData(dataSet)
+    }
   }
 
+  const handleUpdate = () => {
+    setData([])
+  }
 
 
   const handleShow = () => setShow(true);
@@ -75,39 +79,33 @@ const Dashboard = () => {
 
       {/* Data */}
       <div className='flex flex-col items-center justify-center space-y-8 border-t-2 border-grey py-6'>
-        {/* <div className='w-[100%]'>
-          <Subject handleTest={handleTest} />
-        </div> */}
         {
-          !currentUser[0] !== undefined ?
-            (
-
-              data &&
-              data.map((e) => {
-                console.log(e)
+          currentUser[0] !== undefined ?
+            data ?
+              data.map((e, index) => {
                 return (
-                  <div className='w-[100%]'>
-                    <Subject data_model={e} />
+                  <div className='w-[100%]' key={index} >
+                    <Subject data_model={e} handleUpdate={handleUpdate} index={index} />
                   </div>
                 )
               })
-
-            )
-            :
-            (
+              :
               <div className='text-2xl' >
-                Sign in first!
+                No data
               </div>
-            )
+            :
+            <div className='text-2xl' >
+              Sign in first!
+            </div>
         }
       </div>
 
-      <button
+      {/* <button
         onClick={() => handleData()}
         className='bg-blue-500 px-8 py-1 rounded-md'
       >
         test here
-      </button>
+      </button> */}
     </div >
   )
 }

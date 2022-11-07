@@ -13,9 +13,10 @@ const AddSubject = ({ handleClose }) => {
     attended: "",
     min: "",
     achieved: "",
+    date: ""
   })
 
-  const dateSet = () => {
+  const date = () => {
     const today = new Date();
     const yyyy = today.getFullYear();
     let mm = today.getMonth() + 1;
@@ -23,8 +24,7 @@ const AddSubject = ({ handleClose }) => {
     if (dd < 10) dd = '0' + dd;
     if (mm < 10) mm = '0' + mm;
     let formattedToday = dd + '/' + mm + '/' + yyyy;
-    setData({ ...data, date: formattedToday })
-    console.log(data)
+    return formattedToday
   }
 
   const handleChange = (e) => {
@@ -42,9 +42,11 @@ const AddSubject = ({ handleClose }) => {
 
   function achievedStatus() {
     let x = parseFloat((data.attended / data.occurred) * 100).toFixed(2);
+    let today = date()
     setData({
       ...data,
-      achieved: x
+      achieved: x,
+      date: today
     })
   }
 

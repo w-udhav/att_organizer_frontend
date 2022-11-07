@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getDoc, getFirestore, collection, doc, setDoc, getDocs } from 'firebase/firestore'
+import { getDoc, getFirestore, collection, doc, setDoc, getDocs, deleteDoc } from 'firebase/firestore'
 import { getAuth, signOut } from 'firebase/auth'
 
 const firebaseConfig = {
@@ -40,6 +40,10 @@ export async function addDocument(data, currentUser) {
     achieved: parseFloat(data.achieved),
     date: String(data.date)
   })
+}
+
+export async function deleteDocument(data, currentUser) {
+  await deleteDoc(doc(db, currentUser, data.name))
 }
 
 export async function getCollections(currentUser) {

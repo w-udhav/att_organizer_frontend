@@ -42,8 +42,44 @@ input[type=number] {
   -moz-appearance: textfield;
 }
 
-.bgBack {
-  background-image: url('./assets/landscapes/3.jpg');
+.bgBack1 {
+  background-image: url('./assets/landscapes/cropped/1.jpg');
+  background-size: cover;
+  background-position: 40% 35%;
+}
+
+.bgBack2 {
+  background-image: url('./assets/landscapes/cropped/2.jpg');
+  background-size: cover;
+  background-position: 40% 35%;
+}
+
+.bgBack3 {
+  background-image: url('./assets/landscapes/cropped/3.jpg');
+  background-size: cover;
+  background-position: 40% 35%;
+}
+
+.bgBack4 {
+  background-image: url('./assets/landscapes/cropped/4.jpg');
+  background-size: cover;
+  background-position: 40% 35%;
+}
+
+.bgBack5 {
+  background-image: url('./assets/landscapes/cropped/5.jpg');
+  background-size: cover;
+  background-position: 40% 35%;
+}
+
+.bgBack6 {
+  background-image: url('./assets/landscapes/cropped/6.jpg');
+  background-size: cover;
+  background-position: 40% 35%;
+}
+
+.bgBack7 {
+  background-image: url('./assets/landscapes/cropped/7.jpg');
   background-size: cover;
   background-position: 40% 35%;
 }

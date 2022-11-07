@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useContext } from 'react'
-import { AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai'
-import { addDocument } from '../Firebase'
+import { addDocument, deleteDocument } from '../Firebase'
 import '../index.css'
 import { CredentialContext } from './contexts/CredentialContext'
 import EditableBox from './EditableBox'
@@ -21,21 +20,28 @@ const Subject = (props) => {
   const [edit, setEdit] = useState(false)
   const [loading, setLoading] = useState(false)
 
+  const imgClass = ["bgBack1", "bgBack2", "bgBack3", "bgBack4", "bgBack5", "bgBack6", "bgBack7"]
+
   useEffect(() => {
-    if (state.achieved >= 75) {
+    if (state.achieved >= state.min) {
       setStatus(true)
     } else {
       setStatus(false)
     }
   })
 
+  useEffect(() => {
+    achievedStatus()
+  }, [state.occurred, state.achieved, state.attended])
 
 
   function achievedStatus() {
-    let x = parseFloat((state.attended / state.occurred) * 100).toFixed(1);
+    let x = parseFloat((state.attended / state.occurred) * 100).toFixed(2);
+    let today = date()
     setState({
       ...state,
-      achieved: x
+      achieved: x,
+      date: today
     })
   }
 
@@ -47,7 +53,7 @@ const Subject = (props) => {
     })
   }
 
-  const date = async () => {
+  const date = () => {
     const today = new Date();
     const yyyy = today.getFullYear();
     let mm = today.getMonth() + 1; // Months start at 0!
@@ -55,29 +61,28 @@ const Subject = (props) => {
     if (dd < 10) dd = '0' + dd;
     if (mm < 10) mm = '0' + mm;
     const formattedToday = dd + '/' + mm + '/' + yyyy;
-    setState({ ...state, date: formattedToday })
-    achievedStatus();
+    return formattedToday
   }
 
 
   const handleEdit = () => {
     setEdit(true)
-    console.log(data)
+    achievedStatus();
+    console.log(data.date)
   }
   const handleConfirm = async () => {
     const confirm = window.confirm(
       "Are you sure to continue?"
     )
     if (confirm === true) {
-      await date()
-        .then(async () => {
-          setEdit(false);
-          setLoading(true)
-          await addDocument(state, currentUser[0])
-            .then(() => {
-              setLoading(false);
-            })
+      setEdit(false);
+      setLoading(true);
+      await addDocument(state, currentUser[0])
+        .then(() => {
+          setLoading(false);
+          props.handleUpdate()
         })
+
     }
   }
 
@@ -91,15 +96,35 @@ const Subject = (props) => {
         occurred: data.occurred,
         attended: data.attended,
         min: data.min,
-        achieved: data.achieved
+        achieved: data.achieved,
+        date: data.date
       })
     }
     setEdit(false);
   }
 
+  const handleDelete = async () => {
+    const confirmDelete = window.confirm(
+      "Are you sure? This subject's data will deleted permanently!"
+    )
+    if (confirmDelete === true) {
+      try {
+        setEdit(false)
+        setLoading(true)
+        await deleteDocument(state, currentUser[0])
+          .then(() => {
+            setLoading(false)
+          })
+      } catch (error) {
+        console.error(error)
+      }
+    }
+  }
+
+
   return (
     <div className='mx-2 md:mx-[20%] flex flex-col shadow-md rounded-sm bg-white'>
-      <div className='flex flex-row px-3 justify-between items-center bg-gradient-to-r from-cyan-500 to-blue-500 rounded-[10px 10px 0 0] pt-16 pb-2 bgBack'>
+      <div className={`flex flex-row px-3 justify-between items-center bg-gradient-to-r from-cyan-500 to-blue-500 rounded-[10px 10px 0 0] pt-16 pb-2 ${imgClass[props.index]}`}>
         <h1 className='text-white text-2xl'> {state.name} </h1>
         <h3 className='text-white text-sm'> {state.date} </h3>
       </div>
@@ -191,9 +216,15 @@ const Subject = (props) => {
             // Delete
             < div className=''>
               <button
-                onClick={() => handleEdit()}
+                disabled={loading}
+                onClick={() => handleDelete()}
               >
-                <img className='w-8 ' src={require('../assets/trash.png')} alt='trash icon' />
+                {
+                  loading ?
+                    <img className='w-8 ' src={require('../assets/trash.gif')} alt='trash icon' />
+                    :
+                    <img className='w-8 ' src={require('../assets/trash.png')} alt='trash icon' />
+                }
               </button>
             </div>
             :
