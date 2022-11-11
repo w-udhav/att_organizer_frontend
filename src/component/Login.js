@@ -17,6 +17,7 @@ const Login = () => {
 
 
   const userHandler = (e) => {
+    setInputError('')
     const { name, value } = e.target;
     setData(perState => ({ ...perState, [name]: value }))
   }
@@ -61,12 +62,12 @@ const Login = () => {
 
   }
   return (
-    <div className='w-full min-h-[92vh] relative'>
-      <div className='flex flex-col md:flex-row items-center justify-evenly absolute alignY'>
-        <div className='md:w-[50%] '>
+    <div className='w-full min-h-[92vh] relative pt-10'>
+      <div className='flex flex-col md:flex-row items-center justify-evenly '>
+        <div className='flex-1 '>
           <form onSubmit={handleLogin} className='bg-white md:container md:mx-auto w-[100vw] md:w-[52%] py-8 px-6 rounded-md shadow-xl shadow-zinc-300'>
-            <h1 className='text-3xl font-semibold text-center mt-3 mb-9'> Welcome Back! </h1>
-            {/* <p className='text-xl text-zinc-500 font-thin mt-2 mb-6'> Please proceed. . . </p> */}
+            {/* <h1 className='text-3xl font-semibold text-center mt-3 mb-9'> Welcome Back! </h1> */}
+            <img className='w-full mb-9' src={require('../assets/welcome.jpg')} alt="" />
             <div className='flex flex-col space-y-4'>
               <div className='flex flex-col space-y-2'>
                 <label htmlFor='email'>
@@ -79,7 +80,7 @@ const Login = () => {
                   name='email'
                   value={data.email}
                   onChange={userHandler}
-                  className='bg-zinc-100 border outline-none py-2 px-3 rounded-md shadow-inner focus:border-blue-400 '
+                  className={`bg-zinc-100 border outline-none py-2 px-3 rounded-md shadow-inner focus:border-blue-400 ${inputError === 'email' ? "border-red-500" : ""}`}
                 />
               </div>
               <div className='flex flex-col space-y-2'>
@@ -92,17 +93,12 @@ const Login = () => {
                   value={data.pass}
                   onChange={userHandler}
                   name='pass'
-                  className='bg-zinc-100 outline-none py-2 px-3 rounded-md shadow-inner border focus:border-blue-400'
+                  className={`bg-zinc-100 outline-none py-2 px-3 rounded-md shadow-inner border focus:border-blue-400 ${inputError === 'pass' ? "border-red-500" : ""}`}
                 />
               </div>
 
             </div>
-            {/* <button
-              disabled={currentUser[0] !== undefined}
-              className='w-full text-[18px] mt-8 bg-blue-500 text-white py-2 px-6 rounded-xl shadow-xl shadow-blue-100'
-            >
-              Continue
-            </button> */}
+
             <button
               disabled={currentUser[0] !== undefined}
               className="text-white w-full mt-8 justify-center outline-none border-none bg-blue-500 shadow-blue-300 shadow-xl hover:bg-blue-600 font-medium rounded-xl text-[15px] px-6 py-3 text-center dark:bg-blue-500 dark:hover:bg-blue-600 inline-flex items-center"
@@ -117,16 +113,16 @@ const Login = () => {
                   "Continue"
               }
             </button>
-            <div className='mt-6'>
+            <div className='mt-6 text-sm'>
               don't have an account?&nbsp;
-              <span className='underline underline-offset-4 text-blue-500 hover:font-semibold'>
-                <Link to='/signup'>Create Now!</Link>
+              <span className='border border-transparent rounded-md px-3 py-1 transition-all  underline-offset-3 text-blue-500 hover:border-blue-300 hover:bg-blue-200'>
+                <Link to='/signup'>Create new!</Link>
               </span>
             </div>
           </form>
         </div>
-        <div className='hidden md:block md:w-[50%]'>
-          <img className='' src={require('../assets/login.jpg')} alt='logo' />
+        <div className='hidden md:block flex-1 '>
+          <img className='w-full' src={require('../assets/sign.jpg')} alt='logo' />
         </div>
       </div>
     </div>

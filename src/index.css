@@ -84,6 +84,11 @@ input[type=number] {
   background-position: 40% 35%;
 }
 
+.homeBg {
+  background-image: url('./assets/bg.jpg');
+  background-size: cover;
+}
+
 .alignY {
   top: 50%;
   transform: translate(0, -50%);

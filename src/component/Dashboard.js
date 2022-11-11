@@ -4,25 +4,13 @@ import AddSubject from './AddSubject';
 import Subject from './Subject';
 import { auth, getCollections } from '../Firebase';
 import { CredentialContext } from './contexts/CredentialContext';
-import { onAuthStateChanged } from 'firebase/auth';
 
 
 const Dashboard = () => {
   const [show, setShow] = useState(false);
   const [data, setData] = useState([])
 
-  const { currentUser, setCurrentUser } = useContext(CredentialContext)
-
-  useEffect(() => {
-    const unsub = onAuthStateChanged(auth, user => {
-      if (user !== null) {
-        setCurrentUser([user.uid, user.email]);
-      } else {
-        setCurrentUser('')
-      }
-    });
-    return unsub;
-  }, []);
+  const { currentUser } = useContext(CredentialContext)
 
   useEffect(() => {
     handleData();
@@ -48,8 +36,8 @@ const Dashboard = () => {
     <div className=''>
 
       {/* head */}
-      <div className='flex flex-row justify-between items-center py-3 px-8 shadow-md'>
-        <div className='text-2xl ' style={{ fontFamily: 'Barlow' }}>
+      <div className='flex flex-row justify-between items-center py-3 md:px-8 px-4 shadow-md'>
+        <div className='text-xl ' style={{ fontFamily: 'Barlow' }}>
           {currentUser === '' ? "Not logged in" : currentUser[1]}
         </div>
         <div className=''>
@@ -59,7 +47,7 @@ const Dashboard = () => {
               :
               <button
                 onClick={() => handleShow()}
-                className='bg-blue-400 px-6 py-2 rounded-md text-white'
+                className='bg-blue-400 px-6 py-1 rounded-md text-white'
               >
                 New
               </button>

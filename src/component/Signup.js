@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import db, { auth } from '../Firebase';
 import { doc, setDoc } from 'firebase/firestore';
 import { CredentialContext } from './contexts/CredentialContext';
@@ -17,10 +17,9 @@ const Signup = () => {
   })
   const [loading, setLoading] = useState(false);
   const [inputError, setInputError] = useState("");
-  let naviagate = useNavigate();
 
   // Destructuring
-  const { currentUser, setCurrentUser } = useContext(CredentialContext);
+  const { currentUser } = useContext(CredentialContext);
   const { username, email, pass, cpass } = user1;
 
 
@@ -103,11 +102,11 @@ const Signup = () => {
 
 
   return (
-    <div className='w-full'>
+    <div className='w-full pt-8'>
       <div className='text-center text-2xl text-red-600'>
         {errors}
       </div>
-      <div className='flex flex-col md:flex-row items-center justify-evenly my-14'>
+      <div className='flex flex-col md:flex-row items-center justify-evenly'>
         <div className='flex-1'>
           <form onSubmit={handleSubmit} className='bg-white container mx-auto w-[95vw] md:w-[52%] py-8 px-6 rounded-md shadow-xl shadow-blue-100' >
             <h1 className='text-3xl font-semibold text-center mt-3 mb-9'> Create an account </h1>
@@ -187,9 +186,9 @@ const Signup = () => {
                   "Submit"
               }
             </button>
-            <div className='mt-6'>
+            <div className='mt-6 text-sm'>
               already have an account?&nbsp;
-              <span className='underline text-blue-500 hover:font-bold'>
+              <span className='border border-transparent rounded-md px-3 py-1 transition-all  underline-offset-3 text-blue-500 hover:border-blue-300 hover:bg-blue-200'>
                 <Link to='/login'>Sign In </Link>
               </span>
             </div>

@@ -2,6 +2,8 @@ import React, { useContext, useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { logout } from '../Firebase'
 import { CredentialContext } from './contexts/CredentialContext'
+import Lottie from 'lottie-react'
+import menu from '../Lotties/menu.json'
 
 const Navbar = () => {
   const { currentUser } = useContext(CredentialContext)
@@ -30,18 +32,18 @@ const Navbar = () => {
   useEffect(() => { }, [currentUser])
   return (
     <div className='sticky top-0 border border-grey w-full bg-white z-30'>
-      <div className='flex flex-row items-center justify-between py-3 md:px-16 px-3'>
-        <div className='flex flex-row items-center space-x-3'>
-          <img className='w-[35px]' src={require('../assets/logo.png')} alt="" />
-          <div className='text-2xl'> PlayGround </div>
-        </div>
+      <div className='flex flex-row items-center justify-between py-1 md:px-8 px-4'>
+        <Link to='/' className='flex flex-row items-center space-x-3'>
+          <img className='w-[25px]' src={require('../assets/logo.png')} alt="" />
+          <div className='text-xl'> PlayGround </div>
+        </Link>
         <div className='hidden md:flex md:flex-row flex-col justify-evenly items-center space-x-6 text-blue-900'>
-          <div className=''>
+          <div className='pt-1'>
             <Link to='/' className='flex flex-col items-center '>
               <div className='p-1 rounded-full bg-yellow-300'>
                 <img className='w-[20px]' src={require('../assets/home.png')} alt="home logo" />
               </div>
-              <p> Home </p>
+              <p className='text-sm'> Home </p>
             </Link>
           </div>
 
@@ -49,12 +51,12 @@ const Navbar = () => {
             currentUser[0] !== undefined ?
               ""
               :
-              <div>
+              <div className='pt-1'>
                 <Link to='/login' className='flex flex-col items-center'>
                   <div className='p-1 rounded-full bg-yellow-300'>
                     <img className='w-[20px]' src={require('../assets/login.png')} alt="login logo" />
                   </div>
-                  <p> Login </p>
+                  <p className='text-sm'> Login </p>
                 </Link>
               </div>
           }
@@ -63,21 +65,21 @@ const Navbar = () => {
             currentUser[0] !== undefined ?
               ""
               :
-              <div>
+              <div className='pt-1'>
                 <Link to='/signup' className='flex flex-col items-center'>
                   <div className='rounded-full bg-yellow-300'>
                     <img className='w-[28px] ' src={require('../assets/signup.png')} alt="signup logo" />
                   </div>
-                  <p> Sign up </p>
+                  <p className='text-sm'> Sign up </p>
                 </Link>
               </div>
           }
-          <div>
+          <div className='pt-1'>
             <Link to='/dashboard' className='flex flex-col items-center'>
               <div className='p-1'>
                 <img className='w-[20px]' src={require('../assets/dashboard.png')} alt="signup logo" />
               </div>
-              <p> Dashboard </p>
+              <p className='text-sm'> Dashboard </p>
             </Link>
           </div>
           {
@@ -94,16 +96,18 @@ const Navbar = () => {
               ""
           }
         </div>
-        <div className='md:hidden block'
+        <div
+          className='md:hidden block w-[30px] pt-1'
           onClick={() => setShow(true)}
         >
           <button
             className=''
           >
-            <img className='w-[40px]' src={require('../assets/menu.png')} alt='hamburger icon' />
+            {/* <img className='w-[30px]' src={require('../assets/menu.gif')} alt='hamburger icon' /> */}
+            <Lottie animationData={menu} />
           </button>
         </div>
-        <div onClick={() => setShow(false)} className={`md:hidden fixed top-0 left-0 w-[100%] h-screen  transition-all duration-700 bg-black shadow-xl ${show ? "bg-opacity-80" : "bg-opacity-20 w-[0%]"}`}>
+        <div onClick={() => setShow(false)} className={`md:hidden fixed top-0 left-0 w-[100%] h-screen  transition-all duration-500 bg-black shadow-xl ${show ? "bg-opacity-80" : "bg-opacity-20 w-[0%]"}`}>
           <div className={`absolute w-[50%] h-screen bg-white transition-all ease-in-out duration-300   ${show ? "translate-x-0" : "translate-x-[-200px]"}`}>
             <div className='md:hidden flex flex-col text-[19px] space-y-4 px-3 py-8'>
               <div className=''>
@@ -111,7 +115,7 @@ const Navbar = () => {
                   <div className='p-1 rounded-full bg-yellow-300'>
                     <img className='w-[20px]' src={require('../assets/home.png')} alt="home logo" />
                   </div>
-                  <p> Home </p>
+                  <p className='text-lg'> Home </p>
                 </Link>
               </div>
               {
@@ -123,7 +127,7 @@ const Navbar = () => {
                       <div className='p-1 rounded-full bg-yellow-300'>
                         <img className='w-[20px]' src={require('../assets/login.png')} alt="login logo" />
                       </div>
-                      <p> Login </p>
+                      <p className='text-lg'> Login </p>
                     </Link>
                   </div>
               }
@@ -136,7 +140,7 @@ const Navbar = () => {
                       <div className='rounded-full bg-yellow-300'>
                         <img className='w-[28px] ' src={require('../assets/signup.png')} alt="signup logo" />
                       </div>
-                      <p> Sign up </p>
+                      <p className='text-lg'> Sign up </p>
                     </Link>
                   </div>
               }
@@ -145,7 +149,7 @@ const Navbar = () => {
                   <div className='p-1'>
                     <img className='w-[20px]' src={require('../assets/dashboard.png')} alt="signup logo" />
                   </div>
-                  <p> Dashboard </p>
+                  <p className='text-lg'> Dashboard </p>
                 </Link>
               </div>
               {
