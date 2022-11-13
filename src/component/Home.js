@@ -28,28 +28,46 @@ const Home = ({ user }) => {
       <div className='bg-[#F3F3F3] w-full py-8 space-y-5 pb-12'>
         <div className='w-full flex flex-row items-center justify-center text-center'>
           <div className='text-2xl md:text-[25px]'>
-            Choose your journey?
+            {
+              user === "" ?
+                "Choose your journey?" : "Continue..."
+            }
           </div>
           <div className=''>
             <img className='w-32' src={require('../assets/home2.gif')} alt="" />
           </div>
         </div>
-        <div className='flex flex-col md:flex-row flex-wrap items-center justify-center md:space-x-8 md:space-y-0 space-y-5'>
-          <div>
-            <Link to='/login'>
-              <button className="text-white w-52 transition-all ease-out justify-center outline-none border-none bg-blue-500 shadow-blue-300 shadow-xl hover:bg-blue-600 font-medium rounded-xl text-[15px] px-6 py-4 text-center dark:bg-blue-500 dark:hover:bg-blue-600 inline-flex items-center" >
-                Login
-              </button>
-            </Link>
-          </div>
-          <div>
-            <Link to='/signup'>
-              <button className="text-white w-52 transition-all ease-out justify-center outline-none border-none bg-blue-500 shadow-blue-300 shadow-xl hover:bg-blue-600 font-medium rounded-xl text-[15px] px-6 py-4 text-center dark:bg-blue-500 dark:hover:bg-blue-600 inline-flex items-center" >
-                Sign up
-              </button>
-            </Link>
-          </div>
-        </div>
+
+        {/* Buttons */}
+        {
+          user === "" ?
+            <div className='flex flex-col md:flex-row flex-wrap items-center justify-center md:space-x-8 md:space-y-0 space-y-5'>
+              <div>
+                <Link to='/login'>
+                  <button className="text-white w-52 transition-all ease-out justify-center outline-none border-none bg-blue-500 shadow-blue-300 shadow-xl hover:bg-blue-600 font-medium rounded-xl text-[15px] px-6 py-4 text-center dark:bg-blue-500 dark:hover:bg-blue-600 inline-flex items-center" >
+                    Login
+                  </button>
+                </Link>
+              </div>
+              <div>
+                <Link to='/signup'>
+                  <button className="text-white w-52 transition-all ease-out justify-center outline-none border-none bg-blue-500 shadow-blue-300 shadow-xl hover:bg-blue-600 font-medium rounded-xl text-[15px] px-6 py-4 text-center dark:bg-blue-500 dark:hover:bg-blue-600 inline-flex items-center" >
+                    Sign up
+                  </button>
+                </Link>
+              </div>
+            </div>
+            :
+            <div className='flex justify-center'>
+              <div>
+                <Link to='/dashboard'>
+                  <button className="text-white w-52 transition-all ease-out justify-center outline-none border-none bg-blue-500 shadow-blue-300 shadow-xl hover:bg-blue-600 font-medium rounded-xl text-[15px] px-6 py-4 text-center dark:bg-blue-500 dark:hover:bg-blue-600 inline-flex items-center" >
+                    Dashboard
+                  </button>
+                </Link>
+              </div>
+            </div>
+        }
       </div>
     </div>
   )

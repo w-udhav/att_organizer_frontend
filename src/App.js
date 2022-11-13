@@ -8,6 +8,7 @@ import { CredentialContext } from "./component/contexts/CredentialContext";
 import { useContext, useEffect } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./Firebase";
+import Footer from "./component/Footer";
 
 function App() {
   const { currentUser, setCurrentUser } = useContext(CredentialContext)
@@ -24,7 +25,7 @@ function App() {
   }, []);
 
   return (
-    <div className="">
+    <div className="flex flex-col h-screen">
       <Router>
         <Navbar />
         <Routes>
@@ -33,6 +34,7 @@ function App() {
           <Route path="/signup" element={<Signup />} />
           <Route path="/dashboard" element={<Dashboard />} />
         </Routes>
+        <Footer />
       </Router>
     </div >
   );

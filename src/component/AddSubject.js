@@ -80,7 +80,7 @@ const AddSubject = ({ handleClose }) => {
 
   return (
     <div className='fixed top-0 left-0 bottom-0 bg-black bg-opacity-60 w-screen '>
-      <div className='absolute  top-[50%] md:top-[30%] left-[50%] translate-x-[-50%] translate-y-[-50%] md:translate-y-[-30%] items-center flex flex-col rounded-[10px] shadow-xl bg-blue-100 '>
+      <div className='absolute top-[50%]  left-[50%] translate-x-[-50%] translate-y-[-50%]  items-center flex flex-col rounded-[10px] shadow-xl bg-blue-100 '>
         <div className='w-full flex flex-row items-center justify-between mb-7 rounded-t-[10px] pt-2 pb-1 px-2 border border-b-zinc-400'>
           <div className='text-3xl'>
             Enter details...

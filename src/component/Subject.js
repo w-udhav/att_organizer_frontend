@@ -28,11 +28,11 @@ const Subject = (props) => {
     } else {
       setStatus(false)
     }
-  })
+  }, [state.achieved, state.min])
 
   useEffect(() => {
     achievedStatus()
-  }, [state.occurred, state.achieved, state.attended])
+  }, [state.occurred, state.attended])
 
 
   function achievedStatus() {
@@ -124,7 +124,7 @@ const Subject = (props) => {
 
   return (
     <div className='mx-2 md:mx-[20%] flex flex-col shadow-md rounded-sm bg-white'>
-      <div className={`flex flex-row px-3 justify-between items-center bg-gradient-to-r from-cyan-500 to-blue-500 rounded-[10px 10px 0 0] pt-16 pb-2 ${imgClass[props.index]}`}>
+      <div className={`flex flex-row px-3 justify-between items-center bg-gradient-to-r from-cyan-500 to-blue-500 rounded-[10px 10px 0 0] pt-16 md:pt-[10%] pb-2 ${imgClass[props.index]}`}>
         <h1 className='text-white text-2xl'> {state.name} </h1>
         <h3 className='text-white text-sm'> {data.date} </h3>
       </div>
